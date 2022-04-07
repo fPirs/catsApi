@@ -18,21 +18,35 @@ const apiRequest =  async () => {
         select.appendChild(option)
     });
     const contentHtml = document.querySelector('.contentImg');
+    const contentParam = document.querySelector('.contentParam');
     select.addEventListener('change',async () => {
         const request = await fetch(`https://cataas.com/cat/${select.value}?json=true`);
         const resRequest = await request.json();
         console.log(resRequest);
         const img = document.createElement('img');
+        const p = document.createElement('p')
         img.src = `https://cataas.com/${resRequest.url}`;
+        const imageTag = resRequest.tags.join(',')
+        p.textContent = imageTag;
+        imageTag;
+        img.after(p);
         const removeImg = () => {document.querySelectorAll('img').forEach((el) => {
             el.remove();
             });
+            
+        }
+        const removeParam = () => {document.querySelectorAll('p').forEach((el) => {
+            el.remove();
+            });
+            
         }
 
-        removeImg()
+        removeImg();
+        removeParam();
         contentHtml.appendChild(img)
+        contentParam.appendChild(img.after(p));
+        
     });
-
 };
     
 apiRequest();
